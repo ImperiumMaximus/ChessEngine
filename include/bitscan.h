@@ -6,6 +6,6 @@
 void bit_scan_setup();
 
 int bit_scan_forward_ll(uint64_t v);
-int bit_scan_backward_ll(uint64_t v);
+int bit_scan_reverse_ll(uint64_t v);
 
 #endif /* __BITSCAN_H__ */

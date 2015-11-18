@@ -46,8 +46,7 @@ void arch_setup(void) {
                 arch_running_cpu.has_fast_bit_scan = false;
             else
                 arch_running_cpu.has_fast_bit_scan = true;
-        }
-        else if (arch_running_cpu.family == 0x0F) // Pentium IV
+        } else if (arch_running_cpu.family == 0x0F) // Pentium IV
             arch_running_cpu.has_fast_bit_scan = false;
         else // Buggy CPU?
             arch_running_cpu.has_fast_bit_scan = false;
