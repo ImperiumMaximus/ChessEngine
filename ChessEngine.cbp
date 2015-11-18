@@ -45,18 +45,35 @@
 			<Add option="-pedantic" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
+			<Add option="-m64" />
+			<Add option="`pkg-config --cflags glib-2.0`" />
 			<Add directory="." />
 			<Add directory="./include" />
 		</Compiler>
+		<Linker>
+			<Add option="-m64" />
+			<Add option="`pkg-config --libs glib-2.0`" />
+		</Linker>
+		<Unit filename="include/bitscan.h" />
 		<Unit filename="include/board.h" />
+		<Unit filename="include/cpu.h" />
+		<Unit filename="include/x86/arch.h" />
 		<Unit filename="src/board.c">
 			<Option compilerVar="CC" />
 		</Unit>
 		<Unit filename="src/main.c">
 			<Option compilerVar="CC" />
 		</Unit>
+		<Unit filename="src/x86/bitscan.c">
+			<Option compilerVar="CC" />
+		</Unit>
+		<Unit filename="src/x86/cpu.c">
+			<Option compilerVar="CC" />
+		</Unit>
 		<Extensions>
-			<code_completion />
+			<code_completion>
+				<search_path add="/usr/include/glib-2.0" />
+			</code_completion>
 			<debugger />
 		</Extensions>
 	</Project>
