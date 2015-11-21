@@ -6,38 +6,59 @@
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
-			<Target title="Debug">
-				<Option output="bin/Debug/ChessEngine" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+			<Target title="Debug_x64">
+				<Option output="bin/Debug_x64/ChessEngine" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug_x64/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-m64" />
 					<Add option="-g" />
 				</Compiler>
+				<Linker>
+					<Add option="-m64" />
+				</Linker>
 			</Target>
-			<Target title="Release">
-				<Option output="bin/Release/ChessEngine" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Release/" />
+			<Target title="Release_x64">
+				<Option output="bin/Release_x64/ChessEngine" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release_x64/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add option="-m64" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add option="-m64" />
 				</Linker>
 			</Target>
 			<Target title="Tests">
-				<Option output="bin/Debug/test_ChessEngine" prefix_auto="1" extension_auto="1" />
-				<Option object_output="obj/Debug/" />
+				<Option output="bin/Debug_x64/test_ChessEngine" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug_x64/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
 				<Compiler>
+					<Add option="-m64" />
 					<Add option="-g" />
 					<Add option="`pkg-config --cflags check`" />
 				</Compiler>
 				<Linker>
+					<Add option="-m64" />
 					<Add option="`pkg-config --libs check`" />
+				</Linker>
+			</Target>
+			<Target title="Debug_i386">
+				<Option output="bin/Debug_i386/ChessEngine" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug_i386/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-m32" />
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-m32" />
 				</Linker>
 			</Target>
 		</Build>
@@ -58,13 +79,11 @@
 			<Add option="-pedantic" />
 			<Add option="-Wextra" />
 			<Add option="-Wall" />
-			<Add option="-m64" />
 			<Add option="`pkg-config --cflags glib-2.0`" />
 			<Add directory="." />
 			<Add directory="./include" />
 		</Compiler>
 		<Linker>
-			<Add option="-m64" />
 			<Add option="`pkg-config --libs glib-2.0`" />
 		</Linker>
 		<Unit filename="include/bitscan.h" />
@@ -76,8 +95,9 @@
 		</Unit>
 		<Unit filename="src/main.c">
 			<Option compilerVar="CC" />
-			<Option target="Debug" />
-			<Option target="Release" />
+			<Option target="Debug_x64" />
+			<Option target="Release_x64" />
+			<Option target="Debug_i386" />
 		</Unit>
 		<Unit filename="src/x86/bitscan.c">
 			<Option compilerVar="CC" />

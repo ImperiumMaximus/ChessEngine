@@ -36,11 +36,11 @@ int bit_scan_reverse_ll(uint64_t v) {
 
 /* GCC Intrinsics to bit scanning -> they map to specific ASM instructions */
 int bit_scan_forward_intrin(uint64_t x) {
-    return (x != 0 ? __builtin_ctzl(x) : -1);
+    return (x != 0 ? __builtin_ctzll(x) : -1);
 }
 
 int bit_scan_reverse_intrin(uint64_t x) {
-    return (x != 0 ? (int) sizeof(x) * 8 - __builtin_clzl(x) - 1 : -1);
+    return (x != 0 ? (int) sizeof(x) * 8 - __builtin_clzll(x) - 1 : -1);
 }
 
 /* DeBrunij multiplication for bit scanning -> for CPUs that have poor performance on BSF/BSR */
