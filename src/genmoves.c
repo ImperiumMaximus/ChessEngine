@@ -737,6 +737,19 @@ struct {
         .anti_diag_mask_ex = 0x8000000000000000, .column_mask_ex = 0x8080808080808080 },
 };
 
+uint64_t knight_attacks[64] = {
+    0x0000000000020400, // 0
+    0x0000000000050800, // 1
+    0x00000000000A1100, // 2
+    0x0000000000142200, // 3
+    0x0000000000284400, // 4
+    0x0000000000508800, // 5
+    0x0000000000A01000, // 6
+    0x0000000000402000, // 7
+    0x0000000002040004, // 8
+
+};
+
 uint64_t genmoves_row_attacks(uint64_t occ, uint32_t pos) {
     uint32_t file = pos & 7;
     uint32_t rkx8 = pos & 56;
@@ -777,3 +790,4 @@ uint64_t genmoves_column_attacks(uint64_t occ, uint32_t pos) {
     forward &= square_attacks[pos].column_mask_ex;
     return forward;
 }
+
