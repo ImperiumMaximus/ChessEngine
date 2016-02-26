@@ -10,7 +10,7 @@ void arch_setup(void) {
     uint32_t regs[4];
     char vendor_string[13];
 
-    __cpuid(GET_VENDOR_ID, regs);
+    __cpuid(regs, GET_VENDOR_ID);
 
     memcpy(vendor_string, regs + 1, 4);
     memcpy(vendor_string + 4, regs + 3, 4);
@@ -28,7 +28,7 @@ void arch_setup(void) {
         arch_running_cpu.brand = UNKNOWN;
     }
 
-    __cpuid(GET_FEATURES, regs);
+    __cpuid(regs, GET_FEATURES);
 
     arch_running_cpu.family = (regs[0] & EAX_INFO_FAMILY) >> EAX_INFO_FAMILY_SHIFT;
     arch_running_cpu.model = (regs[0] & EAX_INFO_MODEL) >> EAX_INFO_MODEL_SHIFT;
