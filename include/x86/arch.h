@@ -43,8 +43,10 @@ typedef struct X86Cpu {
     bool has_fast_bit_scan;
 } X86Cpu;
 
-static inline void cpuid(uint32_t code, uint32_t regs[4]) {
-    __asm__ volatile("cpuid" : "=a"(regs[0]), "=b"(regs[1]), "=c"(regs[2]), "=d"(regs[3]) : "a" (code));
-}
+#ifdef __GNUC__
+	static inline void __cpuid(uint32_t regs[4], uint32_t code) {
+		__asm__ volatile("cpuid" : "=a"(regs[0]), "=b"(regs[1]), "=c"(regs[2]), "=d"(regs[3]) : "a" (code));
+	}
+#endif
 
 #endif /* __X86_ARCH_H__ */
