@@ -19,7 +19,9 @@ endfunction()
 
 project(ChessEngine)
 
-option (CHESSENGINE_USE_BUNDLED_GLIB "Use Bundled GLib Libraries for you compiler/platform" OFF)
+option (CHESSENGINE_USE_BUNDLED_GLIB "Use bundled GLib Libraries for your compiler/platform" OFF)
+option (CHESSENGINE_ENABLE_TESTING "Build unit testing suite" ON)
+option (CHESSENGING_USE_BUNDLED_LIBCHECK "Use bundled Check Unit Testing Library for your compiler/platform" OFF)
 
 if (MSVC)
 	detect_architecture("_M_AMD64" x86_64)
@@ -79,7 +81,28 @@ find_package(GLIB REQUIRED)
 
 include_directories(${CMAKE_SOURCE_DIR}/include ${GLIB_INCLUDE_DIRS})
 
-set(SRCS src/x86/cpu.c src/x86/bitscan.c src/board.c src/genmoves.c src/main.c)
+set(SRCS src/x86/cpu.c src/x86/bitscan.c src/board.c src/genmoves.c)
+set(HDRS include/bitscan.h include/board.h include/cpu.h include/genmoves.h include/x86/arch.h)
+add_library (ChessEngineCore ${SRCS})
 
-add_executable(ChessEngine ${SRCS})
-target_link_libraries(ChessEngine ${GLIB_LIBRARIES})
+add_executable(ChessEngine src/main.c)
+target_link_libraries(ChessEngine ChessEngineCore ${GLIB_LIBRARIES})
+
+if (CHESSENGINE_ENABLE_TESTING)
+    if (CHESSENGINE_USE_BUNDLED_LIBCHECK)
+        if (MSVC14 AND ARCHITECTURE_x86_64)
+            set(LIBCHECK_BUNDLED_LIBDIR "${CMAKE_SOURCE_DIR}/externals/check/vs14/x64/lib" CACHE STRING "" FORCE)
+		    set(LIBCHECK_BUNDLED_INCLUDEDIR "${CMAKE_SOURCE_DIR}/externals/check/vs14/x64/include" CACHE STRING "" FORCE)
+        elseif(MSVC14 AND ARCHITECTURE_x86)
+            set(LIBCHECK_BUNDLED_LIBDIR "${CMAKE_SOURCE_DIR}/externals/check/vs14/Win32/lib" CACHE STRING "" FORCE)
+		    set(LIBCHECK_BUNDLED_INCLUDEDIR "${CMAKE_SOURCE_DIR}/externals/check/vs14/Win32/include" CACHE STRING "" FORCE)
+        endif()
+    endif()
+    find_package(Check REQUIRED)
+    include_directories(${LIBCHECK_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/tests)
+    add_executable(ChessEngineTests tests/test_board.c tests/tests_main.c)
+    target_link_libraries(ChessEngineTests ChessEngineCore ${GLIB_LIBRARIES} ${LIBCHECK_LIBRARIES})
+    enable_testing()
+    add_test(NAME Tests COMMAND ChessEngineTests)
+endif()
+
