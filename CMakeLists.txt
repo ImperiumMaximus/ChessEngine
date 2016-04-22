@@ -44,24 +44,24 @@ if (NOT MSVC)
 	                  -Wmissing-include-dirs -Wswitch-enum -Wswitch-default \
 	                  -Wmain -pedantic -Wextra -Wall")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${GNU_WARNINGS}")
-	
+
 	set(CMAKE_C_FLAGS_DEBUG "-g -O0")
 	set(CMAKE_C_FLAGS_RELEASE "-O2")
-	
+
 	set(CMAKE_EXE_LINKER_FLAGS_RELEASE "${CMAKE_EXE_LINKER_FLAGS_RELEASE} -s")
-	
+
 	if (ARCHITECTURE_x86_64)
 		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -m64")
 	endif()
 else()
 	set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
     set(CMAKE_CONFIGURATION_TYPES Debug Release CACHE STRING "" FORCE)
-	
+
 	set(CMAKE_C_FLAGS "/W3 /MP /Zi /Zo" CACHE STRING "" FORCE)
-	
+
 	set(CMAKE_C_FLAGS_DEBUG  "/Od /MDd" CACHE STRING "" FORCE)
 	set(CMAKE_C_FLAGS_RELEASE  "/O2 /GS- /MD" CACHE STRING "" FORCE)
-	
+
 	set(CMAKE_EXE_LINKER_FLAGS_DEBUG   "/DEBUG" CACHE STRING "" FORCE)
     set(CMAKE_EXE_LINKER_FLAGS_RELEASE "/DEBUG /INCREMENTAL:NO /OPT:REF,ICF" CACHE STRING "" FORCE)
 endif()
@@ -81,8 +81,21 @@ find_package(GLIB REQUIRED)
 
 include_directories(${CMAKE_SOURCE_DIR}/include ${GLIB_INCLUDE_DIRS})
 
-set(SRCS src/x86/cpu.c src/x86/bitscan.c src/board.c src/genmoves.c)
-set(HDRS include/bitscan.h include/board.h include/cpu.h include/genmoves.h include/x86/arch.h)
+if (NOT MSVC)
+    enable_language(ASM-ATT)
+    if (ARCHITECTURE_x86)
+        set (ASM_HDRS include/x86/gas/assembly.h)
+        set (ASM_SRCS src/x86/i386/bitscan_intrin.S)
+    elseif (ARCHITECTURE_x86_64)
+        set (ASM_HDRS include/x86/gas/assembly.h)
+        set (ASM_SRCS src/x86/x86_64/bitscan_intrin.S)
+    else ()
+    endif(ARCHITECTURE_x86)
+    set_property(SOURCE ${ASM_SRCS} PROPERTY LANGUAGE C)
+endif(NOT MSVC)
+
+set(SRCS ${ASM_SRCS} src/x86/cpu.c src/x86/bitscan.c src/board.c src/genmoves.c)
+set(HDRS ${ASM_HDRS} include/bitscan.h include/board.h include/cpu.h include/genmoves.h include/x86/arch.h)
 add_library (ChessEngineCore ${SRCS})
 
 add_executable(ChessEngine src/main.c)
@@ -100,7 +113,7 @@ if (CHESSENGINE_ENABLE_TESTING)
     endif()
     find_package(Check REQUIRED)
     include_directories(${LIBCHECK_INCLUDE_DIRS} ${CMAKE_SOURCE_DIR}/tests)
-    add_executable(ChessEngineTests tests/test_board.c tests/tests_main.c)
+    add_executable(ChessEngineTests tests/test_board.c tests/test_intrin.c tests/tests_main.c)
     target_link_libraries(ChessEngineTests ChessEngineCore ${GLIB_LIBRARIES} ${LIBCHECK_LIBRARIES})
     enable_testing()
     add_test(NAME Tests COMMAND ChessEngineTests)
