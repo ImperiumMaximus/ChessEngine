@@ -1,4 +1,4 @@
-#include <assembly.h>
+#include <x86/gas/assembly.h>
 
 DEFINE_FUNCTION(bit_set)
     /* &value */
@@ -47,7 +47,6 @@ DEFINE_FUNCTION(bit_scan_forward_intrin)
 2:
     ret
 END_FUNCTION(bit_scan_forward_intrin)
-
 
 DEFINE_FUNCTION(bit_scan_reverse_intrin)
     mov 8(%esp), %edx
