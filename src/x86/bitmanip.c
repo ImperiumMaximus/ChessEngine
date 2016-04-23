@@ -1,4 +1,4 @@
-#include <bitscan.h>
+#include <bitmanip.h>
 #include <stddef.h>
 #include <cpu.h>
 
@@ -12,7 +12,7 @@ bs_ll_pfn bsr_pfn = NULL;
 int bit_scan_forward_debruijn(uint64_t x);
 int bit_scan_reverse_debruijn(uint64_t x);
 
-void bit_scan_setup() {
+void bit_manip_setup() {
     if (arch_cpu_has_fast_bitscan()) {
         bsf_pfn = &bit_scan_forward_intrin;
         bsr_pfn = &bit_scan_reverse_intrin;

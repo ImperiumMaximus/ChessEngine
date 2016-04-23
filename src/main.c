@@ -2,14 +2,15 @@
 
 #include <board.h>
 #include <cpu.h>
-#include <bitscan.h>
+#include <bitmanip.h>
+
 
 int main (int argc, char** argv) {
     arch_setup();
     Board* b = board_new();
 
-    uint64_t x = 0xaa55;
-    x = __builtin_bswap64(x);
+    uint64_t x = 0x0123456789abcdef;
+    x = bswap64_intrin(x);
 
     printf("%lx\n", x);
 

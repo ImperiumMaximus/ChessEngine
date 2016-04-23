@@ -1,5 +1,5 @@
 #include <cpu.h>
-#include <bitscan.h>
+#include <bitmanip.h>
 #include <x86/arch.h>
 
 #include <string.h>
@@ -62,7 +62,7 @@ void arch_setup(void) {
         arch_running_cpu.has_fast_bit_scan = false;
     }
 
-    bit_scan_setup();
+    bit_manip_setup();
 }
 
 bool arch_cpu_has_fast_bitscan(void) {

@@ -63,3 +63,11 @@ DEFINE_FUNCTION(bit_scan_reverse_intrin)
 2:
     ret
 END_FUNCTION(bit_scan_reverse_intrin)
+
+DEFINE_FUNCTION(bswap64_intrin)
+    mov 4(%esp), %edx
+    mov 8(%esp), %eax
+    bswap %eax
+    bswap %edx
+    ret
+END_FUNCTION(bswap64_intrin)

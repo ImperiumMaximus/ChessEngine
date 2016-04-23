@@ -27,3 +27,9 @@ DEFINE_FUNCTION(bit_scan_reverse_intrin)
 1:
     ret
 END_FUNCTION(bit_scan_reverse_intrin)
+
+DEFINE_FUNCTION(bswap64_intrin)
+    mov %rdi, %rax
+    bswap %rax
+    ret
+END_FUNCTION(bswap64_intrin)

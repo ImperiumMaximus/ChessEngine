@@ -1,6 +1,6 @@
 #include "test_suite.h"
 
-#include <bitscan.h>
+#include <bitmanip.h>
 
 START_TEST(test_bit_set) {
     uint64_t value = 0;

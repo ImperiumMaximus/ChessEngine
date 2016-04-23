@@ -1,4 +1,5 @@
 #include <genmoves.h>
+#include <bitmanip.h>
 
 uint8_t first_row_attacks[64 * 8]= {
     //first column
@@ -1011,10 +1012,10 @@ uint64_t genmoves_row_attacks(uint64_t occ, uint32_t pos) {
 uint64_t genmoves_diag_attacks(uint64_t occ, uint32_t pos) {
     uint64_t forward, reverse;
     forward  = occ & square_attacks[pos].diag_mask_ex;
-    reverse  = __builtin_bswap64(forward);
+    reverse  = bswap64_intrin(forward);
     forward -= square_attacks[pos].bit_mask;
-    reverse -= __builtin_bswap64(square_attacks[pos].bit_mask);
-    forward ^= __builtin_bswap64(reverse);
+    reverse -= bswap64_intrin(square_attacks[pos].bit_mask);
+    forward ^= bswap64_intrin(reverse);
     forward &= square_attacks[pos].diag_mask_ex;
     return forward;
 }
@@ -1022,10 +1023,10 @@ uint64_t genmoves_diag_attacks(uint64_t occ, uint32_t pos) {
 uint64_t genmoves_anti_diag_attacks(uint64_t occ, uint32_t pos) {
     uint64_t forward, reverse;
     forward  = occ & square_attacks[pos].anti_diag_mask_ex;
-    reverse  = __builtin_bswap64(forward);
+    reverse  = bswap64_intrin(forward);
     forward -= square_attacks[pos].bit_mask;
-    reverse -= __builtin_bswap64(square_attacks[pos].bit_mask);
-    forward ^= __builtin_bswap64(reverse);
+    reverse -= bswap64_intrin(square_attacks[pos].bit_mask);
+    forward ^= bswap64_intrin(reverse);
     forward &= square_attacks[pos].anti_diag_mask_ex;
     return forward;
 }
@@ -1033,10 +1034,10 @@ uint64_t genmoves_anti_diag_attacks(uint64_t occ, uint32_t pos) {
 uint64_t genmoves_column_attacks(uint64_t occ, uint32_t pos) {
     uint64_t forward, reverse;
     forward  = occ & square_attacks[pos].column_mask_ex;
-    reverse  = __builtin_bswap64(forward);
+    reverse  = bswap64_intrin(forward);
     forward -= square_attacks[pos].bit_mask;
-    reverse -= __builtin_bswap64(square_attacks[pos].bit_mask);
-    forward ^= __builtin_bswap64(reverse);
+    reverse -= bswap64_intrin(square_attacks[pos].bit_mask);
+    forward ^= bswap64_intrin(reverse);
     forward &= square_attacks[pos].column_mask_ex;
     return forward;
 }
