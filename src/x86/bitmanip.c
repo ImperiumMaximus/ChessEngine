@@ -20,7 +20,7 @@ void bit_manip_setup() {
     } else {
         bsf_pfn = &bit_scan_forward_debruijn;
         bsr_pfn = &bit_scan_reverse_debruijn;
-        printf("Using DeBrunij algorithms for bitscanning\n");
+        printf("Using De Bruijn algorithms for bitscanning\n");
     }
 }
 
