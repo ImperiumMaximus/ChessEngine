@@ -38,7 +38,7 @@ if (NOT DEFINED ARCHITECTURE)
 endif()
 
 if (NOT MSVC)
-    set(GNU_WARNINGS "-fomit-frame-pointer -Wshadow -Wredundant-decls -Wcast-align -Wundef -Wfloat-equal -Winline -Wunreachable-code -Wmissing-declarations -Wmissing-include-dirs -Wswitch-enum -Wswitch-default -Wmain -pedantic -Wextra -Wall")
+    set(GNU_WARNINGS "-std=c99 -fomit-frame-pointer -Wshadow -Wredundant-decls -Wcast-align -Wundef -Wfloat-equal -Winline -Wunreachable-code -Wmissing-declarations -Wmissing-include-dirs -Wswitch-enum -Wswitch-default -Wmain -pedantic -Wextra -Wall")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${GNU_WARNINGS}")
 
     set(CMAKE_C_FLAGS_DEBUG "-g -O0")
