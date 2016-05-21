@@ -16,4 +16,4 @@ install: false
 script:
  - cmake .
  - make
- - ctest
+ - ctest -V
