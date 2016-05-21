@@ -1,3 +1,20 @@
+// Copyright (C) 2016 Fioratto Raffaele
+// Bit manipulation routines for genmoves
+
+// This program is free software: you can redistribute it and/or modify it
+// under the terms of the GNU General Public License as published by the Free
+// Software Foundation, either version 3 of the License, or (at your option)
+// any later version.
+
+// This program is distributed in the hope that it will be useful, but WITHOUT
+// ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+// FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for
+// more details.
+
+// You should have received a copy of the GNU General Public License along
+// with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+
 #include <bitmanip.h>
 #include <stddef.h>
 #include <cpu.h>
@@ -31,7 +48,7 @@ int bit_scan_reverse_ll(uint64_t v) {
     return bsr_pfn(v);
 }
 
-/* DeBrunij multiplication for bit scanning -> for CPUs that have poor performance on BSF/BSR */
+/* De Bruijn multiplication for bit scanning -> for CPUs that have poor performance on BSF/BSR */
 const int index64[64] = {
     0, 47,  1, 56, 48, 27,  2, 60,
     57, 49, 41, 37, 28, 16,  3, 61,
